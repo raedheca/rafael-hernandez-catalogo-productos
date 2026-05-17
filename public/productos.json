@@ -1,0 +1,56 @@
+[
+  {
+    "id_producto": 1,
+    "nombre_producto": "Notebook Lenovo Ideapad Slim 3",
+    "descripcion_producto": "Notebook con procesador Intel Core i5, 8GB de RAM y 256GB SSD. Ideal para trabajo y estudio.",
+    "precio_producto": 1879999,
+    "imagen_producto": "https://http2.mlstatic.com/D_NQ_NP_2X_890589-MLA111646433485_052026-F.webp",
+    "stock_producto": 12,
+    "categoria_producto": "tecnologia"
+  },
+  {
+    "id_producto": 2,
+    "nombre_producto": "Auriculares Inalámbricos Sony Wh-ch720n",
+    "descripcion_producto": "Auriculares Bluetooth con cancelacion de ruido y bateria de 30 horas.",
+    "precio_producto": 189999,
+    "imagen_producto": "https://http2.mlstatic.com/D_NQ_NP_2X_705105-MLA99443950708_112025-F.webp",
+    "stock_producto": 25,
+    "categoria_producto": "audio"
+  },
+  {
+    "id_producto": 3,
+    "nombre_producto": "Samsung Galaxy A56 5g",
+    "descripcion_producto": "Telefono inteligente con pantalla AMOLED de 6.5 pulgadas y camara de 64MP.",
+    "precio_producto": 800000,
+    "imagen_producto": "https://http2.mlstatic.com/D_NQ_NP_2X_641150-MLA94466176565_102025-F.webp",
+    "stock_producto": 18,
+    "categoria_producto": "tecnologia"
+  },
+  {
+    "id_producto": 4,
+    "nombre_producto": "Xiaomi Smart Band 10 Plateado",
+    "descripcion_producto": "Reloj inteligente con monitor cardiaco y seguimiento de actividad fisica.",
+    "precio_producto": 68499,
+    "imagen_producto": "https://http2.mlstatic.com/D_NQ_NP_2X_749397-MLA100045787315_122025-F.webp",
+    "stock_producto": 30,
+    "categoria_producto": "tecnologia"
+  },
+  {
+    "id_producto": 5,
+    "nombre_producto": "Teclado Redragon Kumara QWERTY",
+    "descripcion_producto": "Teclado mecanico gamer con retroiluminacion RGB y switches azules.",
+    "precio_producto": 95000,
+    "imagen_producto": "https://http2.mlstatic.com/D_NQ_NP_2X_945662-MLA91881395133_092025-F.webp",
+    "stock_producto": 22,
+    "categoria_producto": "gaming"
+  },
+  {
+    "id_producto": 6,
+    "nombre_producto": "Mouse gamer de juego LogitechG Series Hero",
+    "descripcion_producto": "Mouse gamer de alta precision con sensor HERO 25K y 11 botones programables.",
+    "precio_producto": 78000,
+    "imagen_producto": "https://http2.mlstatic.com/D_NQ_NP_2X_923017-MLA99428489296_112025-F.webp",
+    "stock_producto": 40,
+    "categoria_producto": "gaming"
+  }
+]
