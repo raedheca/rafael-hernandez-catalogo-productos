@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "PowerShell(node scripts/seed_firestore.mjs)",
-      "PowerShell(npm run lint)",
-      "PowerShell(npm run dev)"
-    ]
-  }
-}
