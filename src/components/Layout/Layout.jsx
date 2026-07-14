@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom'
+import { Container } from 'react-bootstrap'
 import Header from './Header.jsx'
 import NavBar from './NavBar.jsx'
 import Footer from './Footer.jsx'
@@ -9,9 +10,9 @@ const Layout = () => {
       <Header />
       <NavBar />
       <main className="flex-grow-1 py-4">
-        <div className="container">
+        <Container>
           <Outlet />
-        </div>
+        </Container>
       </main>
       <Footer />
     </div>

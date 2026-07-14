@@ -1,4 +1,4 @@
-import Icono from '../Icono/Icono.jsx'
+import { FaBagShopping } from 'react-icons/fa6'
 
 const Footer = () => {
   return (
@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="row g-4">
           <div className="col-md-6">
             <h6 className="text-warning fw-bold mb-2">
-              <Icono name="shop" size={18} className="me-2" />
+              <FaBagShopping size={18} className="me-2" />
               RafuShop
             </h6>
             <p className="small text-white-50 mb-0">

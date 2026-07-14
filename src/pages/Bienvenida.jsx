@@ -1,5 +1,8 @@
 import { Link } from 'react-router-dom'
-import Icono from '../components/Icono/Icono.jsx'
+import { Card, Col, Row } from 'react-bootstrap'
+import { FaBagShopping } from 'react-icons/fa6'
+import HeroSection from './HeroSection.js'
+import Seo from '../components/Seo/Seo.jsx'
 
 const equipo = [
   {
@@ -31,41 +34,44 @@ const equipo = [
 const Bienvenida = () => {
   return (
     <section>
-      <div className="text-center py-4 mb-4">
+      <Seo
+        titulo="Inicio"
+        descripcion="RafuShop: tu tienda online con los mejores productos de tecnologia, audio y gaming."
+      />
+
+      <HeroSection className="text-center py-5 mb-4">
         <h1 className="fw-bold">Bienvenido a RafuShop</h1>
         <p className="text-secondary mb-3">
           Tu tienda online con los mejores productos seleccionados.
         </p>
         <Link to="/productos" className="btn btn-outline-warning">
-          <Icono name="bag" className="me-2" />
+          <FaBagShopping className="me-2" />
           Ver catalogo
         </Link>
-      </div>
+      </HeroSection>
 
       <h2 className="h4 mb-3">Nuestro equipo</h2>
-      <div className="row g-4">
+      <Row className="g-4">
         {equipo.map((persona) => (
-          <div className="col-md-4" key={persona.id_persona}>
-            <div className="card border-0 shadow-sm h-100 text-center">
+          <Col md={4} key={persona.id_persona}>
+            <Card className="border-0 shadow-sm h-100 text-center">
               <img
                 src={persona.imagen_persona}
                 alt={persona.nombre_persona}
                 className="rounded-circle border border-4 border-primary object-fit-cover d-block mx-auto mt-4"
                 style={{ width: '140px', height: '140px' }}
               />
-              <div className="card-body">
-                <h5 className="card-title mb-1">{persona.nombre_persona}</h5>
-                <span className="badge bg-primary mb-2">
-                  {persona.rol_persona}
-                </span>
-                <p className="card-text text-muted small">
+              <Card.Body>
+                <Card.Title className="mb-1">{persona.nombre_persona}</Card.Title>
+                <span className="badge bg-primary mb-2">{persona.rol_persona}</span>
+                <Card.Text className="text-muted small">
                   {persona.descripcion_persona}
-                </p>
-              </div>
-            </div>
-          </div>
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
         ))}
-      </div>
+      </Row>
     </section>
   )
 }

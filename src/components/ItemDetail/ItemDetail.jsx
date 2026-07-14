@@ -1,25 +1,26 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import Icono from '../Icono/Icono.jsx'
+import { Alert, Button, Col, Row, Spinner } from 'react-bootstrap'
+import { FaArrowLeft, FaBoxOpen, FaCartPlus, FaTriangleExclamation } from 'react-icons/fa6'
+import { obtener_producto_por_id } from '../../services/productos_service.js'
+import { useCarrito } from '../../context/CarritoContext.jsx'
+import Seo from '../Seo/Seo.jsx'
 
 const ItemDetail = () => {
   const { id_producto } = useParams()
+  const { agregar_al_carrito } = useCarrito()
 
   const [producto_detalle, set_producto_detalle] = useState(null)
   const [esta_cargando, set_esta_cargando] = useState(true)
   const [mensaje_error, set_mensaje_error] = useState(null)
+  const [producto_agregado, set_producto_agregado] = useState(false)
 
   useEffect(() => {
+    // Se resetea el spinner de carga cuando cambia id_producto (navegacion entre productos).
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     set_esta_cargando(true)
-    fetch('/productos.json')
-      .then((respuesta) => respuesta.json())
-      .then((datos) => {
-        const producto_encontrado = datos.find(
-          (item) => item.id_producto === Number(id_producto)
-        )
-        if (!producto_encontrado) {
-          throw new Error('Producto no encontrado')
-        }
+    obtener_producto_por_id(id_producto)
+      .then((producto_encontrado) => {
         set_producto_detalle(producto_encontrado)
         set_mensaje_error(null)
       })
@@ -27,42 +28,52 @@ const ItemDetail = () => {
       .finally(() => set_esta_cargando(false))
   }, [id_producto])
 
+  const manejar_agregar_al_carrito = () => {
+    agregar_al_carrito(producto_detalle)
+    set_producto_agregado(true)
+    setTimeout(() => set_producto_agregado(false), 2000)
+  }
+
   if (esta_cargando) {
     return (
       <div className="text-center py-5">
-        <div className="spinner-border text-warning" role="status"></div>
+        <Spinner animation="border" variant="warning" role="status" />
       </div>
     )
   }
 
   if (mensaje_error) {
     return (
-      <div className="alert alert-danger">
-        <Icono name="exclamation-triangle" className="me-2" />
+      <Alert variant="danger">
+        <FaTriangleExclamation className="me-2" />
         {mensaje_error}
         <div className="mt-3">
           <Link to="/productos" className="btn btn-sm btn-outline-warning">
             Volver al catalogo
           </Link>
         </div>
-      </div>
+      </Alert>
     )
   }
 
   const precio_formateado = producto_detalle.precio_producto.toLocaleString('es-AR')
 
   return (
-    <article className="row g-4">
-      <div className="col-md-6">
+    <Row as="article" className="g-4">
+      <Seo
+        titulo={producto_detalle.nombre_producto}
+        descripcion={producto_detalle.descripcion_producto}
+      />
+      <Col md={6}>
         <img
           src={producto_detalle.imagen_producto}
           alt={producto_detalle.nombre_producto}
           className="w-100 object-fit-contain rounded shadow-sm bg-white p-4"
           style={{ maxHeight: '420px' }}
         />
-      </div>
+      </Col>
 
-      <div className="col-md-6">
+      <Col md={6}>
         <span className="badge bg-info text-dark mb-2 text-capitalize">
           {producto_detalle.categoria_producto}
         </span>
@@ -72,22 +83,22 @@ const ItemDetail = () => {
         <h3 className="text-dark fw-bold my-3">${precio_formateado}</h3>
 
         <p className="text-secondary small">
-          <Icono name="box-seam" className="me-1" />
+          <FaBoxOpen className="me-1" />
           Stock disponible: {producto_detalle.stock_producto} unidades
         </p>
 
         <div className="d-flex gap-2 mt-3">
-          <button type="button" className="btn btn-outline-warning">
-            <Icono name="cart-plus" className="me-2" />
-            Agregar al carrito
-          </button>
+          <Button variant="outline-warning" onClick={manejar_agregar_al_carrito}>
+            <FaCartPlus className="me-2" />
+            {producto_agregado ? 'Agregado ✓' : 'Agregar al carrito'}
+          </Button>
           <Link to="/productos" className="btn btn-outline-secondary">
-            <Icono name="arrow-left" className="me-1" />
+            <FaArrowLeft className="me-1" />
             Volver al catalogo
           </Link>
         </div>
-      </div>
-    </article>
+      </Col>
+    </Row>
   )
 }
 
