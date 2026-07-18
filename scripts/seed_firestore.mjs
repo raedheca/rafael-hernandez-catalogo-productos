@@ -1,5 +1,6 @@
 // Script one-shot para migrar public/productos.json a la coleccion 'productos'
-// de Firestore. Se ejecuta una unica vez con: node scripts/seed_firestore.mjs
+// de Firestore, y para cargar unos cupones de ejemplo en la coleccion 'cupones'.
+// Se ejecuta una unica vez con: node scripts/seed_firestore.mjs
 //
 // Lee las credenciales del archivo .env de la raiz del proyecto (formato
 // VITE_FIREBASE_*) sin depender de ninguna libreria extra para parsearlo.
@@ -91,6 +92,7 @@ const ejecutar_seed = async () => {
   const auth = getAuth(app)
   const db = getFirestore(app)
   const coleccion_productos = collection(db, 'productos')
+  const coleccion_cupones = collection(db, 'cupones')
 
   console.log(`Iniciando sesion como ${seed_email}...`)
   try {
@@ -117,7 +119,37 @@ const ejecutar_seed = async () => {
     console.log(`  - "${datos_producto.nombre_producto}" creado con id ${nuevo_documento.id}`)
   }
 
-  console.log('Listo. Todos los productos fueron cargados a Firestore.')
+  console.log('Cargando cupones de ejemplo...')
+  const cupones_ejemplo = [
+    {
+      codigo_cupon: 'BIENVENIDA10',
+      tipo_descuento: 'porcentaje',
+      valor_descuento: 10,
+      activo: true,
+      fecha_vencimiento: null,
+    },
+    {
+      codigo_cupon: 'RAFU5000',
+      tipo_descuento: 'monto_fijo',
+      valor_descuento: 5000,
+      activo: true,
+      fecha_vencimiento: null,
+    },
+    {
+      codigo_cupon: 'VENCIDO20',
+      tipo_descuento: 'porcentaje',
+      valor_descuento: 20,
+      activo: true,
+      fecha_vencimiento: '2024-01-01',
+    },
+  ]
+
+  for (const cupon of cupones_ejemplo) {
+    const nuevo_documento = await addDoc(coleccion_cupones, cupon)
+    console.log(`  - Cupon "${cupon.codigo_cupon}" creado con id ${nuevo_documento.id}`)
+  }
+
+  console.log('Listo. Todos los productos y cupones fueron cargados a Firestore.')
   process.exit(0)
 }
 

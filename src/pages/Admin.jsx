@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Alert, Button, Modal, Spinner, Table } from 'react-bootstrap'
+import { Alert, Button, Modal, Spinner, Tab, Table, Tabs } from 'react-bootstrap'
 import { FaPen, FaPlus, FaTrash } from 'react-icons/fa6'
 import {
   actualizar_producto,
@@ -8,6 +8,7 @@ import {
   obtener_productos,
 } from '../services/productos_service.js'
 import FormularioProducto from '../components/FormularioProducto/FormularioProducto.jsx'
+import GestionCupones from '../components/GestionCupones/GestionCupones.jsx'
 import ModalConfirmacion from '../components/ModalConfirmacion/ModalConfirmacion.jsx'
 import Seo from '../components/Seo/Seo.jsx'
 
@@ -81,88 +82,97 @@ const Admin = () => {
         descripcion="Panel de gestion de productos del catalogo de RafuShop."
       />
 
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2 className="mb-0">Administracion de productos</h2>
-        <Button variant="warning" onClick={abrir_formulario_nuevo}>
-          <FaPlus className="me-2" />
-          Nuevo producto
-        </Button>
-      </div>
+      <Tabs defaultActiveKey="productos" className="mb-4">
+        <Tab eventKey="productos" title="Productos">
+          <div className="d-flex justify-content-between align-items-center my-4">
+            <h2 className="mb-0">Administracion de productos</h2>
+            <Button variant="warning" onClick={abrir_formulario_nuevo}>
+              <FaPlus className="me-2" />
+              Nuevo producto
+            </Button>
+          </div>
 
-      {mensaje_exito && (
-        <Alert variant="success" dismissible onClose={() => set_mensaje_exito(null)}>
-          {mensaje_exito}
-        </Alert>
-      )}
+          {mensaje_exito && (
+            <Alert variant="success" dismissible onClose={() => set_mensaje_exito(null)}>
+              {mensaje_exito}
+            </Alert>
+          )}
 
-      {mensaje_error && (
-        <Alert variant="danger" dismissible onClose={() => set_mensaje_error(null)}>
-          {mensaje_error}
-        </Alert>
-      )}
+          {mensaje_error && (
+            <Alert variant="danger" dismissible onClose={() => set_mensaje_error(null)}>
+              {mensaje_error}
+            </Alert>
+          )}
 
-      {esta_cargando ? (
-        <div className="text-center py-5">
-          <Spinner animation="border" variant="warning" role="status">
-            <span className="visually-hidden">Cargando...</span>
-          </Spinner>
-        </div>
-      ) : lista_productos.length === 0 ? (
-        <p className="text-secondary">Todavia no hay productos cargados.</p>
-      ) : (
-        <div className="table-responsive">
-          <Table className="align-middle bg-white shadow-sm">
-            <thead>
-              <tr>
-                <th></th>
-                <th>Nombre</th>
-                <th>Categoria</th>
-                <th>Precio</th>
-                <th>Stock</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {lista_productos.map((producto) => (
-                <tr key={producto.id_producto}>
-                  <td style={{ width: '60px' }}>
-                    <img
-                      src={producto.imagen_producto}
-                      alt={producto.nombre_producto}
-                      className="object-fit-contain"
-                      style={{ width: '50px', height: '50px' }}
-                    />
-                  </td>
-                  <td>{producto.nombre_producto}</td>
-                  <td className="text-capitalize">{producto.categoria_producto}</td>
-                  <td>${producto.precio_producto.toLocaleString('es-AR')}</td>
-                  <td>{producto.stock_producto}</td>
-                  <td>
-                    <div className="d-flex gap-2">
-                      <Button
-                        variant="outline-info"
-                        size="sm"
-                        onClick={() => abrir_formulario_edicion(producto)}
-                        aria-label={`Editar ${producto.nombre_producto}`}
-                      >
-                        <FaPen />
-                      </Button>
-                      <Button
-                        variant="outline-danger"
-                        size="sm"
-                        onClick={() => set_producto_a_eliminar(producto)}
-                        aria-label={`Eliminar ${producto.nombre_producto}`}
-                      >
-                        <FaTrash />
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </div>
-      )}
+          {esta_cargando ? (
+            <div className="text-center py-5">
+              <Spinner animation="border" variant="warning" role="status">
+                <span className="visually-hidden">Cargando...</span>
+              </Spinner>
+            </div>
+          ) : lista_productos.length === 0 ? (
+            <p className="text-secondary">Todavia no hay productos cargados.</p>
+          ) : (
+            <div className="table-responsive">
+              <Table className="align-middle bg-white shadow-sm">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Nombre</th>
+                    <th>Categoria</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {lista_productos.map((producto) => (
+                    <tr key={producto.id_producto}>
+                      <td style={{ width: '60px' }}>
+                        <img
+                          src={producto.imagen_producto}
+                          alt={producto.nombre_producto}
+                          className="object-fit-contain"
+                          style={{ width: '50px', height: '50px' }}
+                        />
+                      </td>
+                      <td>{producto.nombre_producto}</td>
+                      <td className="text-capitalize">{producto.categoria_producto}</td>
+                      <td>${producto.precio_producto.toLocaleString('es-AR')}</td>
+                      <td>{producto.stock_producto}</td>
+                      <td>
+                        <div className="d-flex gap-2">
+                          <Button
+                            variant="outline-info"
+                            size="sm"
+                            onClick={() => abrir_formulario_edicion(producto)}
+                            aria-label={`Editar ${producto.nombre_producto}`}
+                          >
+                            <FaPen />
+                          </Button>
+                          <Button
+                            variant="outline-danger"
+                            size="sm"
+                            onClick={() => set_producto_a_eliminar(producto)}
+                            aria-label={`Eliminar ${producto.nombre_producto}`}
+                          >
+                            <FaTrash />
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </div>
+          )}
+        </Tab>
+        <Tab eventKey="cupones" title="Cupones">
+          <div className="mt-4">
+            <GestionCupones />
+          </div>
+        </Tab>
+      </Tabs>
 
       <Modal show={mostrar_formulario} onHide={() => set_mostrar_formulario(false)} centered>
         <Modal.Header closeButton>
